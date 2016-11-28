@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import handlers.LineHandler;
+
 public class BigDataTool {
   private static FileInputStream fis = null;
   private static InputStreamReader isr = null;
@@ -32,6 +34,20 @@ public class BigDataTool {
     return br;
   }
 
+  public static Map getMap(BufferedReader br, Map map, LineHandler lineHandler) {
+    String s = null;
+    try {
+      while ((s = br.readLine()) != null) {
+        String key = lineHandler.handleKey(s);
+        String value = lineHandler.handleValue(s);
+        map.put(key, value);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return map;
+  }
+
 
   public static BufferedWriter BufferedWriter(String file) {
     try {
@@ -41,6 +57,7 @@ public class BigDataTool {
       e.printStackTrace();
     }
     bw = new BufferedWriter(osr);
+
     return bw;
   }
 
